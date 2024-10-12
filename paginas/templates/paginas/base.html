@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>Hirevac</title>
+
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+
+  <!-- font awesome style -->
+  <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+  <!-- nice select -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+    <!-- Adicionando o OpenLayers -->
+<script src="https://cdn.jsdelivr.net/npm/ol@v10.1.0/dist/ol.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v10.1.0/ol.css">
+
+</head>
+
+<body>
+
+  <div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+
+          <a class="navbar-brand" href="{% url 'homepage' %}">
+            <img src="{% static 'img/poev.png' %}" alt="poev" width="50" height="50" class="d-inline-block align-middle" style="vertical-align: middle; margin-right: 0px; padding-right:0px">
+            <span>
+            POEV.COM.BR
+            </span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  ml-auto">
+              <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'homepage' %}">Início</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'sobre' %}">Sobre</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'contato' %}">Contato</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'todas_vagas' %}">Vagas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}#">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                  <span>
+                    Entrar
+                  </span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'registrar' %}">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                  <span>
+                    Registrar
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+    <!-- slider section -->
+    <section class="slider_section ">
+      <div class="container ">
+        <div class="row">
+          <div class="col-lg-7 col-md-8 mx-auto">
+            <div class="detail-box">
+              <h1>
+                Portal de Oportunidades de Emprego de Vinhedo
+              </h1>
+              <p>
+                  Bem-vindo ao portal de oportunidades de emprego da região de Vinhedo para alunos da Universidade Virtual do Estado de São Paulo (UNIVESP) e comunidade.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- end slider section -->
+  </div>
+
+
+
+
+     {% block conteudo %}
+    {% endblock %}
+
+
+
+
+      {% include 'paginas/footer.html' %}
+
+  <!-- jQery -->
+  <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+  <!-- bootstrap js -->
+  <script src="{% static 'js/bootstrap.js' %}"></script>
+  <!-- nice select -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
+  <!-- custom js -->
+  <script src="{% static 'js/custom.js' %}"></script>
+
+<!-- Incluindo a biblioteca do OpenLayers -->
+<script src="https://cdn.jsdelivr.net/npm/ol@6.5.0/ol.js"></script>
+
+<script>
+    // Inicializa o mapa OpenLayers
+    const map = new ol.Map({
+        target: 'map',
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()  // Camada base do OpenStreetMap
+            })
+        ],
+        view: new ol.View({
+            center: ol.proj.fromLonLat([-46.6333, -23.5505]),  // Centralizado em São Paulo (ajuste conforme necessário)
+            zoom: 10  // Nível de zoom inicial
+        })
+    });
+
+    // Função para adicionar pontos no mapa
+    function addPointsToMap(vagas) {
+        const features = vagas.map(function(vaga) {
+            // Verifique se as coordenadas estão corretamente convertidas para EPSG:3857
+            const feature = new ol.Feature({
+                geometry: new ol.geom.Point(
+                    ol.proj.fromLonLat([parseFloat(vaga.longitude), parseFloat(vaga.latitude)])  // Converta corretamente
+                ),
+                nome: vaga.nome,
+                empresa: vaga.empresa
+            });
+            return feature;
+        });
+
+        const vectorSource = new ol.source.Vector({
+            features: features
+        });
+
+        const vectorLayer = new ol.layer.Vector({
+            source: vectorSource,
+            style: new ol.style.Style({
+                image: new ol.style.Circle({
+                    radius: 7,  // Aumente o raio para garantir visibilidade
+                    fill: new ol.style.Fill({ color: 'red' }),  // Cor do ponto
+                    stroke: new ol.style.Stroke({ color: 'black', width: 2 })  // Contorno do ponto
+                })
+            })
+        });
+
+        map.addLayer(vectorLayer);
+    }
+
+    // Função para buscar os dados da API de vagas
+    function loadVagaPoints() {
+        fetch('/vaga_points/')
+            .then(response => response.json())
+            .then(data => {
+                // Verifique se os dados foram carregados corretamente
+                console.log('Dados carregados:', data);
+
+                // Adicionar os pontos ao mapa
+                addPointsToMap(data);
+            })
+            .catch(error => console.error('Erro ao carregar os dados das vagas:', error));
+    }
+
+    // Chamar a função para carregar os pontos das vagas
+    loadVagaPoints();
+</script>
+
+</body>
+
+</html>
+

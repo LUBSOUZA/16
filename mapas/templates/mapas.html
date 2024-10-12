@@ -1,0 +1,78 @@
+{% load static %}
+
+      <head>
+            <meta charset="UTF-8">
+            <link rel="stylesheet" href="{% static 'css/ol.css' %}">
+            <link rel="stylesheet" href="{% static 'css/mapas.css' %}">
+            <script src="{% static 'js/ol.js' %}"></script>
+      </head>
+
+
+            <div class="main-container">
+                  <div id="map"></div>
+
+                  <div class="toggle-btns-container">
+                        <select id="sourceSelect" class="styled-select"></select>
+                        <button class="icon-toggle-btn" id="extraLayerToggleBtn"><i class="fas fa-map"></i></button>
+                        <button class="icon-toggle-btn" id="legendToggleBtn"><i class="fas fa-info-circle"></i></button>
+                  </div>
+
+                  <div class="layer-switcher" id="extraLayerSwitcher">
+                  </div>
+
+                  <div class="layer-switcher" id="baseLayerSwitcher">
+                        <label><input type="radio" name="baseLayer" value="osmStandard"> OpenStreetMap Standard</label>
+                        <label><input type="radio" name="baseLayer" value="esriWorldImagery" checked> ESRI World Imagery</label>
+                        <label><input type="radio" name="baseLayer" value="esriWorldStreetMap" checked> ESRI World Street Map</label>
+                        <label><input type="radio" name="baseLayer" value="esriTopographicMap" checked> ESRI Topographic Map</label>
+                        <label><input type="radio" name="baseLayer" value="esriNationalGeographicWorldMap" checked> ESRI National Geographic World Map</label>
+                        <label><input type="radio" name="baseLayer" value="esriWorldShadedRelief" checked> Esri World Shaded Relief</label>
+                        <label><input type="radio" name="baseLayer" value="esriDarkGrayCanvas" checked> Esri Dark Gray Canvas</label>
+                        <label><input type="radio" name="baseLayer" value="esriLightGrayCanvas" checked> Esri Light Gray Canvas</label>
+                        <label><input type="radio" name="baseLayer" value="osmHumanitarian"> OpenStreetMap Humanitarian</label>
+                        <label><input type="radio" name="baseLayer" value="cartoDarkMatter"> CartoDB Dark Matter</label>
+                  </div>
+
+                  <div id="legendPopup" style="display: none;">
+                        <div id="legendContent"></div>
+                        <button id="closeLegendBtn">Fechar</button>
+                  </div>
+
+                  <div id="filterBox" class="layer-switcher">
+                        <h5>Filtros de Camadas</h5>
+                        <div id="dynamicFilters"></div>
+                        <button id="applyFilterButton" class="btn-remover-extra-layer">Aplicar Filtro</button>
+                        <button id="removeFilterButton" class="btn-remover-extra-layer">Remover Filtro</button>
+                  </div>
+
+
+                  <div class="map-buttons">
+                        <button class="icon-toggle-btn" id="filterToggle"> <i class="fas fa-filter"></i> </button>
+                        <button class="icon-toggle-btn" id="homeButton"><i class="fas fa-home"></i></button>
+                        <button class="icon-toggle-btn" id="baseLayerToggleBtn"><i class="fas fa-layer-group"></i></button>
+                        <button class="icon-toggle-btn" id="removeAllLayersButton"><i class="fas fa-xmark"></i></button>
+                        <button class="icon-toggle-btn" id="measureLengthButton"><i class="fas fa-ruler"></i></button>
+                        <button class="icon-toggle-btn" id="measureAreaButton"><i class="fas fa-ruler-combined"></i></button>
+                        <button class="icon-toggle-btn" id="clearMeasurementsButton"><i class="fas fa-trash-alt"></i></button>
+                        <div class="search-container">
+                              <input type="text" id="searchBox" class="search-input" placeholder="Buscar lugar...">
+                              <button class="search-icon" id="searchButton"><i class="fas fa-search"></i></button>
+                        </div>
+                        <button class="icon-toggle-btn" id="geolocationButton"><i class="fas fa-location-arrow"></i></button>
+
+                        <a href="{% url 'homepage' %}">
+                            <button class="icon-toggle-btn">
+                                <img src="{% static 'images/poev.png' %}" alt="Logo" class="logo-icon" width="50" height="50">
+                            </button>
+                        </a>
+
+
+                  </div>
+
+                  <div class="coordinate-display" id="coordinateDisplay">Latitude: 0, Longitude: 0</div>
+            </div>
+
+            <script src="{% static 'js/ol_map_base.js' %}"></script>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+

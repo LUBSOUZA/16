@@ -1,0 +1,14 @@
+<h1>Lista de Empresas</h1>
+
+<ul>
+    {% for empresa in empresas %}
+        <li>
+            <a href="{% url 'detalhe_empresa' empresa.pk %}">{{ empresa.nome }}</a>
+        </li>
+    {% empty %}
+        <li>Nenhuma empresa cadastrada.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'homepage' %}">Voltar para a página inicial</a>
+

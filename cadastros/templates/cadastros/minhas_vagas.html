@@ -1,0 +1,41 @@
+{% extends 'usuarios/base.html' %}
+{% load static %}
+
+        {% block conteudo %}
+<div class="container">
+<table class="features-table">
+    <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Link</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vaga in vagas %}
+            <tr>
+                <td>{{ vaga.nome }}</td>
+                <td>{{ vaga.descricao }}</td>
+                <td><a href="{{ vaga.link }}" target="_blank">Ver</a></td>
+                <td>
+                    <a href="{% url 'editar_vaga' vaga.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                    <form action="{% url 'excluir_vaga' vaga.pk %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Você tem certeza que deseja excluir esta vaga?');">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">Você ainda não cadastrou nenhuma vaga.</td>
+            </tr>
+            {% endfor %}
+    </tbody>
+</table>
+</div>
+        {% endblock %}
+
+
+
+

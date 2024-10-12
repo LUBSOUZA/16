@@ -1,0 +1,23 @@
+{
+"layersList": [
+"dsview:a_br_areas_especiais_ti:a_br_areas_especiais_ti",
+"dsview:a_br_areas_especiais_ucs_pi_us:a_br_areas_especiais_ucs_pi_us",
+"dsview:a_br_desmat_mapbiomas_alerta_2018_2021:a_br_desmat_mapbiomas_alerta_2018_2021",
+"dsview:a_br_desmat_prodes_2021:a_br_desmat_prodes_2021",
+"dsview:a_br_eco_biomas:a_br_eco_biomas",
+"dsview:a_br_eco_deficit_app_rl_municipios:a_br_eco_deficit_app_rl_municipios",
+"dsview:a_br_fundiario_florestas_publicas_CNFP2020:a_br_fundiario_florestas_publicas_CNFP2020",
+"dsview:a_br_hidro_ottobacias_nivel12:a_br_hidro_ottobacias_nivel12",
+"dsview:a_br_politico_amazonia_legal_2020:a_br_politico_amazonia_legal_2020",
+"dsview:a_br_politico_estados:a_br_politico_estados",
+"dsview:a_br_politico_limites:a_br_politico_limites",
+"dsview:a_br_politico_municipios:a_br_politico_municipios",
+"dsview:a_mundo_eco_ecorregioes:a_mundo_eco_ecorregioes",
+"dsview:a_mundo_politico_paises:a_mundo_politico_paises",
+"dsview:a_ne_eco_ecorregiões_caatinga:a_ne_eco_ecorregiões_caatinga",
+"dsview:a_ne_politico_municipios_semiarido:a_ne_politico_municipios_semiarido",
+"dsview:l_br_hidro_cursos_ottocodificados:l_br_hidro_cursos_ottocodificados",
+"dsview:l_br_infra_rodovias:l_br_infra_rodovias",
+"dsview:p_br_localidades:p_br_localidades"
+]
+}

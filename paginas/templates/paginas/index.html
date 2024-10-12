@@ -1,0 +1,249 @@
+{% extends 'usuarios/base.html' %}
+{% load static %}
+
+        {% block titulo %}
+        <title>Início</title>
+        {% endblock %}
+
+        {% block conteudo %}
+  <!-- about section -->
+
+  <section class="about_section layout_padding">
+    <div class="container">
+      <div class="row">
+          <div class="detail-box">
+            <div class="heading_container">
+                                    <div class="container">
+                                          <div class="btn-box">
+                                            <a href="">
+                                              View All Freelancers
+                                            </a>
+                                          </div>
+                                          <div class="btn-box">
+                                            <a href="">
+                                              View All Freelancers
+                                            </a>
+                                          </div>
+                                    </div>
+          </div>
+          </div>
+      </div>
+    </div>
+  </section>
+  <!-- expert section -->
+
+  <section class="expert_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Painel do Anunciante
+        </h2>
+      </div>
+<div class="container">
+      <div class="btn-box">
+        <a href="">
+          View All Freelancers
+        </a>
+      </div>
+      <div class="btn-box">
+        <a href="">
+          View All Freelancers
+        </a>
+</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end expert section -->
+
+<section class="about_section layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="heading_container">
+              <h2>
+                Empresas
+              </h2>
+            </div>
+
+            <table class="features-table">
+                <thead>
+                    <tr>
+                        <th>Nome da Empresa</th>
+                        <th>Ver Vagas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for empresa in empresas %}
+                        <tr>
+                            <!-- Nome da empresa com link para detalhes -->
+                            <td>
+                                <a href="{% url 'detalhe_empresa' empresa.pk %}">
+                                    {{ empresa.nome }}
+                                </a>
+                            </td>
+                            <!-- Link para ver vagas da empresa -->
+                            <td>
+                                <a href="{% url 'listar_vagas_empresa' empresa.pk %}" class="btn btn-info btn-sm">Ver Vagas</a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="2">Nenhuma empresa cadastrada.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+</div>
+
+
+  <!-- about section -->
+
+  <section class="about_section layout_padding">
+    <div class="container">
+      <div class="row">
+            <div class="heading_container">
+              <h2>
+                Minhas Vagas
+              </h2>
+            </div>
+                  <table class="features-table">
+                      <thead>
+                              <tr>
+                                  <th>Nome</th>
+                                  <th>Empresa</th>
+                                  <th>CEP</th>
+                                  <th>Descrição</th>
+                                  <th>Link</th>
+                                  <th>Ações</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              {% for vaga in vagas %}
+                              <tr>
+                                  <td>{{ vaga.nome }}</td>
+                                  <td>{{ vaga.empresa }}</td>
+                                  <td>{{ vaga.cep }}</td>
+                                  <td>{{ vaga.descricao }}</td>
+                                  <td><a href="{{ vaga.link }}" target="_blank">Ver</a></td>
+                                  <td>
+                                      <a href="{% url 'editar_vaga' vaga.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                                      <form action="{% url 'excluir_vaga' vaga.pk %}" method="post" style="display: inline;">
+                                          {% csrf_token %}
+                                          <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Você tem certeza que deseja excluir esta vaga?');">Excluir</button>
+                                      </form>
+                                  </td>
+                              </tr>
+                              {% empty %}
+                              <tr>
+                                  <td colspan="4">Você ainda não cadastrou nenhuma vaga.</td>
+                              </tr>
+                              {% endfor %}
+                      </tbody>
+                  </table>
+<div class="container" style="text-align: center">
+<a href="{% url 'criar_vaga' %}" style="width: auto; padding: 8px 16px; display: inline-block; text-align:center"  class="btn btn-primary btn-block">Ver Mapa</a>
+</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- expert section -->
+<div class="container">
+<div class="row">
+<div id="map" style="width: 100%; height: 300px;" class="mb-4"></div>
+<div class="container" style="text-align: center">
+<a href="{% url 'mapas' %}" style="width: auto; padding: 8px 16px; display: inline-block; text-align:center"  class="btn btn-primary btn-block">Ver Mapa</a>
+</div>
+</div>
+</div>
+
+<!-- Incluindo a biblioteca do OpenLayers -->
+<script src="https://cdn.jsdelivr.net/npm/ol@6.5.0/ol.js"></script>
+
+<script>
+    // Inicializa o mapa OpenLayers
+    const map = new ol.Map({
+        target: 'map',
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()  // Camada base do OpenStreetMap
+            })
+        ],
+view: new ol.View({
+    center: ol.proj.fromLonLat([-46.9755, -23.0302]), // Centralizado em Vinhedo
+    zoom: 12 // Nível de zoom inicial
+})    });
+
+    // Função para adicionar pontos no mapa
+    function addPointsToMap(vagas) {
+        const features = vagas.map(function(vaga) {
+            // Verifique se as coordenadas estão corretamente convertidas para EPSG:3857
+            const feature = new ol.Feature({
+                geometry: new ol.geom.Point(
+                    ol.proj.fromLonLat([parseFloat(vaga.longitude), parseFloat(vaga.latitude)])  // Converta corretamente
+                ),
+                nome: vaga.nome,
+                empresa: vaga.empresa
+            });
+            return feature;
+        });
+
+        const vectorSource = new ol.source.Vector({
+            features: features
+        });
+
+    // Usando um ícone SVG para o marcador
+    const vectorLayer = new ol.layer.Vector({
+        source: vectorSource,
+        style: new ol.style.Style({
+            image: new ol.style.Icon({
+                anchor: [0.5, 1], // Ajusta a ancoragem da base do ícone no ponto
+                src: '/static/icons/marker-icon.png', // Caminho para o ícone png
+                scale: 0.08 // Ajuste de escala (1 mantém o tamanho original do SVG)
+            })
+        })
+    });
+
+    map.addLayer(vectorLayer);
+
+    }
+
+    // Função para buscar os dados da API de vagas
+    function loadVagaPoints() {
+        fetch('/vaga_points/')
+            .then(response => response.json())
+            .then(data => {
+                // Verifique se os dados foram carregados corretamente
+                console.log('Dados carregados:', data);
+
+                // Adicionar os pontos ao mapa
+                addPointsToMap(data);
+            })
+            .catch(error => console.error('Erro ao carregar os dados das vagas:', error));
+    }
+
+    // Chamar a função para carregar os pontos das vagas
+    loadVagaPoints();
+</script>
+
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+</script>
+
+
+        {% endblock %}
+
+
+
+

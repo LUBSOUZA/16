@@ -1,0 +1,180 @@
+{% extends 'usuarios/base.html' %}
+{% load static %}
+
+        {% block titulo %}
+        <title>Início</title>
+        {% endblock %}
+
+        {% block conteudo %}
+  <!-- about section -->
+
+  <section class="about_section layout_padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="detail-box">
+            <div class="heading_container">
+              <h2>
+                Sobre
+              </h2>
+            </div>
+            <p>
+
+O POEV é um portal de oportunidades de estágio para alunos da Univesp.  Os
+alunos do Eixo da Computação desenvolveram este portal como parte do Projeto
+Integrador da Univesp usando o DJANGO framework.  Por favor nos ajude a
+comunicar oportunidades em Vinhedo e Região para todos os alunos da Univesp
+incluindo os cursos dos Eixos de Licenciatura e Negócios, além do Eixo da
+Computação.  Qualquer dúvida, entre em contato!
+            </p>
+            <a href="">
+              Ler Mais
+            </a>
+          </div>
+        </div>
+        <div class="col-md-6">
+        <div id="map" style="width: 100%; height: 300px;" class="mb-4"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- expert section -->
+
+  <section class="expert_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Painel do Anunciante
+        </h2>
+      </div>
+<div class="container">
+      <div class="btn-box">
+        <a href="">
+          View All Freelancers
+        </a>
+      </div>
+      <div class="btn-box">
+        <a href="">
+          View All Freelancers
+        </a>
+</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end expert section -->
+
+  <!-- about section -->
+
+  <section class="about_section layout_padding">
+    <div class="container">
+      <div class="row">
+                  <table class="features-table">
+                      <thead>
+                              <tr>
+                                  <th>Nome</th>
+                                  <th>Descrição</th>
+                                  <th>Link</th>
+                                  <th>Ações</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              {% for vaga in vagas %}
+                              <tr>
+                                  <td>{{ vaga.nome }}</td>
+                                  <td>{{ vaga.descricao }}</td>
+                                  <td><a href="{{ vaga.link }}" target="_blank">Ver</a></td>
+                                  <td>
+                                      <a href="{% url 'editar_vaga' vaga.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                                      <form action="{% url 'excluir_vaga' vaga.pk %}" method="post" style="display: inline;">
+                                          {% csrf_token %}
+                                          <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Você tem certeza que deseja excluir esta vaga?');">Excluir</button>
+                                      </form>
+                                  </td>
+                              </tr>
+                              {% empty %}
+                              <tr>
+                                  <td colspan="4">Você ainda não cadastrou nenhuma vaga.</td>
+                              </tr>
+                              {% endfor %}
+                      </tbody>
+                  </table>
+      </div>
+    </div>
+  </section>
+  <!-- expert section -->
+
+<!-- Incluindo a biblioteca do OpenLayers -->
+<script src="https://cdn.jsdelivr.net/npm/ol@6.5.0/ol.js"></script>
+
+<script>
+    // Inicializa o mapa OpenLayers
+    const map = new ol.Map({
+        target: 'map',
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()  // Camada base do OpenStreetMap
+            })
+        ],
+        view: new ol.View({
+            center: ol.proj.fromLonLat([-46.6333, -23.5505]),  // Centralizado em São Paulo (ajuste conforme necessário)
+            zoom: 10  // Nível de zoom inicial
+        })
+    });
+
+    // Função para adicionar pontos no mapa
+    function addPointsToMap(vagas) {
+        const features = vagas.map(function(vaga) {
+            // Verifique se as coordenadas estão corretamente convertidas para EPSG:3857
+            const feature = new ol.Feature({
+                geometry: new ol.geom.Point(
+                    ol.proj.fromLonLat([parseFloat(vaga.longitude), parseFloat(vaga.latitude)])  // Converta corretamente
+                ),
+                nome: vaga.nome,
+                empresa: vaga.empresa
+            });
+            return feature;
+        });
+
+        const vectorSource = new ol.source.Vector({
+            features: features
+        });
+
+        const vectorLayer = new ol.layer.Vector({
+            source: vectorSource,
+            style: new ol.style.Style({
+                image: new ol.style.Circle({
+                    radius: 7,  // Aumente o raio para garantir visibilidade
+                    fill: new ol.style.Fill({ color: 'red' }),  // Cor do ponto
+                    stroke: new ol.style.Stroke({ color: 'black', width: 2 })  // Contorno do ponto
+                })
+            })
+        });
+
+        map.addLayer(vectorLayer);
+    }
+
+    // Função para buscar os dados da API de vagas
+    function loadVagaPoints() {
+        fetch('/vaga_points/')
+            .then(response => response.json())
+            .then(data => {
+                // Verifique se os dados foram carregados corretamente
+                console.log('Dados carregados:', data);
+
+                // Adicionar os pontos ao mapa
+                addPointsToMap(data);
+            })
+            .catch(error => console.error('Erro ao carregar os dados das vagas:', error));
+    }
+
+    // Chamar a função para carregar os pontos das vagas
+    loadVagaPoints();
+</script>
+
+
+        {% endblock %}
+
+
+
+

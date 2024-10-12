@@ -1,0 +1,16 @@
+<h2>Vagas Criadas por Você</h2>
+
+<ul>
+    {% for vaga in vagas %}
+        <li>
+            <strong>Nome da Vaga:</strong> {{ vaga.nome }}<br>
+            <strong>Empresa:</strong> {{ vaga.empresa.nome }}<br>
+            <strong>Descrição:</strong> {{ vaga.descricao }}<br>
+            <strong>Ativa:</strong> {{ vaga.inativa|yesno:"Não,Sim" }}<br>
+            <strong>CEP:</strong> {{ vaga.cep }}
+        </li>
+    {% empty %}
+        <li>Você ainda não criou nenhuma vaga.</li>
+    {% endfor %}
+</ul>
+

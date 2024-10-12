@@ -1,0 +1,11 @@
+{% block content %}
+<h2>Vagas da Empresa: {{ empresa.nome }}</h2>
+
+<ul>
+    {% for vaga in vagas %}
+    <li>{{ vaga.nome }} - <a href="{{ vaga.link }}">Detalhes</a></li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
+

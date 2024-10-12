@@ -1,0 +1,671 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    font-family: 'Roboto', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Main container for the map */
+/* Main container for the map */
+/* Main container for the map */
+/* Main container for the map */
+.main-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 100000; /* Um valor alto para garantir que o navbar fique por cima do mapa */
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+    border: 0px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+}
+/* Main container for the map */
+/* Main container for the map */
+/* Main container for the map */
+/* Main container for the map */
+
+/* Toggle button styles */
+/* Toggle button styles */
+/* Toggle button styles */
+/* Toggle button styles */
+.icon-toggle-btn {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 1100;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+}
+
+.icon-toggle-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Layout for the toggle buttons */
+.toggle-btns-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: row;
+    z-index: 1200;
+    gap: 0.5px; /* Espaçamento entre os botões e o select */
+    justify-content: space-between; /* Garante espaçamento equidistante */
+}
+/* Toggle button styles */
+/* Toggle button styles */
+/* Toggle button styles */
+/* Toggle button styles */
+
+/* Map scale line */
+.ol-scale-line {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 12px;
+    padding: 2px 5px;
+    border-radius: 3px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+/* Layer switcher styles */
+.layer-switcher {
+    position: absolute;
+    font-size: 10px;
+    top: 60px;
+    right: 65px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 200px;
+    transition: transform 0.3s ease;
+}
+
+.layer-switcher.active {
+    display: flex;
+}
+
+.layer-switcher input {
+    margin-right: 8px;
+}
+
+.layer-switcher label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Modern styling for layer switcher */
+.layer-switcher {
+    background: rgba(255, 255, 255, 0.9);
+    color: black;
+    padding: 10px;
+    border-radius: 8px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    max-width: 250px;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.layer-switcher label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.layer-switcher input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.layer-switcher::-webkit-scrollbar {
+    width: 8px;
+}
+
+.layer-switcher::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.layer-switcher::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+/* Measure tools */
+.measure-tools-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: row;
+    z-index: 1200;
+}
+
+.measure-tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
+    white-space: nowrap;
+}
+
+.measure-tooltip-static {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.measure-tooltip-measure {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Search field */
+.search-container {
+    position: relative;
+    margin-right: 5px;
+}
+
+.search-icon {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 1100;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+.search-icon:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.search-input {
+    position: absolute;
+    top: 0;
+    right: 50px;
+    width: 0;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 1em;
+    outline: none;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    z-index: 1000;
+    transition: width 0.3s ease;
+    opacity: 0;
+    box-sizing: border-box;
+}
+
+.search-container.active .search-input {
+    width: 200px;
+    opacity: 1;
+}
+
+
+.map-buttons {
+    position: absolute;
+    top: 50%; /* Centraliza verticalmente */
+    right: 10px; /* Alinha no canto direito */
+    transform: translateY(-50%); /* Ajusta para centralizar perfeitamente */
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+.map-buttons button {
+    margin-top: 5px;
+}
+/* Coordinate display */
+.coordinate-display {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 13px;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+#legendPopup {
+    position: fixed; /* Fixa no lugar */
+    top: 50%; /* Centraliza verticalmente */
+    left: 10px; /* Alinhada à esquerda */
+    transform: translateY(-50%); /* Ajusta para centralizar perfeitamente verticalmente */
+    width: 220px; /* Largura reduzida para seguir o estilo da caixa de download */
+    background-color: rgba(255, 255, 255, 0.9); /* Cor de fundo suave */
+    padding: 15px 20px;
+    border-radius: 8px; /* Bordas arredondadas para um visual moderno */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    z-index: 1200;
+    display: none; /* Inicialmente oculta */
+    opacity: 0; /* Invisível por padrão */
+    visibility: hidden; /* Para ocultar durante a transição */
+    transition: opacity 0.4s ease, visibility 0.4s ease; /* Transição suave */
+    font-family: 'Arial', sans-serif; /* Fonte padrão e leve */
+    color: #333;
+    max-height: 400px;
+    overflow-y: auto; /* Permite rolagem se o conteúdo for maior que a caixa */
+}
+
+#legendPopup.show {
+    display: block;
+    opacity: 1;
+    visibility: visible; /* Torna visível quando ativa */
+}
+
+#legendPopup h4 {
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: normal;
+}
+
+#legendContent {
+    margin-bottom: 15px;
+}
+
+#closeLegendBtn {
+    display: block;
+    width: 100%;
+    background-color: #f44336; /* Cor do botão fechar */
+    color: white;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+#closeLegendBtn:hover {
+    background-color: #d32f2f; /* Cor ao passar o mouse sobre o botão */
+}
+
+/* Scrollbar for layer switcher */
+.layer-switcher::-webkit-scrollbar {
+    width: 6px;
+}
+
+.layer-switcher::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+
+
+
+
+.layer-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.three-dots {
+    cursor: pointer;
+    margin-left: 10px;
+    color: #007bff;
+}
+
+.download-options {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.download-options.active {
+    display: block;
+}
+.layer-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.three-dots {
+    cursor: pointer;
+    margin-left: 10px;
+    color: #007bff;
+}
+#downloadBox {
+    display: none; /* Inicialmente oculto */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centraliza o elemento */
+    background-color: #f9f9f9; /* Cor de fundo suave */
+    border-radius: 8px; /* Bordas ligeiramente arredondadas */
+    padding: 10px 20px;
+    width: 220px; /* Largura reduzida */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    z-index: 10000; /* Ficar sobre outros elementos */
+    opacity: 0; /* Para transição de desaparecimento */
+    visibility: hidden; /* Para a transição */
+    transition: opacity 0.4s ease, visibility 0.4s ease; /* Transição suave de opacidade */
+    font-family: 'Arial', sans-serif; /* Fonte padrão e suave */
+    overflow: auto; /* Adiciona barra de rolagem se o conteúdo ultrapassar a altura */
+}
+
+#downloadBox.show {
+    opacity: 1;
+    visibility: visible; /* Quando ativa, torna visível */
+}
+
+#downloadBox h4 {
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: normal;
+    letter-spacing: 0.5px;
+}
+#downloadBox h4 {
+    word-wrap: break-word; /* Permite que o texto seja quebrado para a próxima linha */
+    white-space: normal;    /* Permite quebra de linha normal */
+    max-width: 100%;        /* Limita a largura do título para que não ultrapasse a caixa */
+    overflow-wrap: break-word; /* Garante a quebra de palavras longas */
+    text-align: center;     /* Centraliza o texto */
+    padding: 10px;          /* Espaçamento ao redor do título */
+    font-size: 16px;        /* Tamanho da fonte do título */
+}
+#downloadBox a {
+    display: block;
+    color: #007bff; /* Azul elegante */
+    text-align: center;
+    padding: 8px 0;
+    margin: 3px 0;
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+#downloadBox a:hover {
+    color: #0056b3; /* Efeito hover para um azul mais escuro */
+}
+
+#downloadBox a:last-child {
+    border-bottom: none; /* Remove borda inferior do último item */
+   margin-bottom: 0;  /* Remove a margem inferior do último item de download */
+}
+
+
+
+#downloadBox .close-button {
+    position: absolute;
+    top: 0px;  /* Distância do topo */
+    right: 10px;  /* Distância da direita */
+    font-size: 24px;  /* Tamanho do X */
+    font-weight: normal;
+    color: #007bff;  /* Cor azul */
+    cursor: pointer;
+    background: transparent;  /* Remove o fundo */
+    border: none;  /* Remove a borda padrão */
+    outline: none;  /* Remove a borda ao receber foco */
+    padding: 0;  /* Remove o padding interno */
+    margin: 0px;
+}
+
+#downloadBox .close-button:hover {
+    color: #0056b3;  /* Cor mais escura ao passar o mouse */
+    background: transparent;  /* Garante que o fundo continue transparente */
+}
+
+#downloadBox .close-button:focus {
+    outline: none;  /* Remove o contorno ao receber foco (para navegadores como Firefox) */
+    background: transparent;  /* Garante que o fundo continue transparente */
+}
+
+/* INFOPOPUP */
+/* INFOPOPUP */
+/* INFOPOPUP */
+/* INFOPOPUP */
+#infoPopup {
+    display: none; /* Inicialmente oculto */
+    position: fixed; /* Fixado para centralização vertical */
+    top: 50%; /* Centraliza verticalmente */
+    left: 20px; /* Alinha à esquerda com 20px de distância da borda esquerda */
+    transform: translateY(-50%); /* Ajusta apenas verticalmente */
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px 20px;
+    padding-top: 40px; /* Espaço extra para o botão "X" */
+    max-width: 300px;
+    min-width: 300px;
+    max-height: 400px; /* Define a altura máxima para o popup */
+    min-height: 150px; /* Altura mínima para evitar que o popup fique muito pequeno */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    z-index: 10000; /* Ficar sobre outros elementos */
+    opacity: 0; /* Inicialmente invisível */
+    visibility: hidden; /* Inicialmente invisível */
+    transition: opacity 0.4s ease, visibility 0.4s ease; /* Transição suave */
+    font-family: 'Arial', sans-serif;
+    overflow: auto; /* Adiciona barra de rolagem se o conteúdo ultrapassar a altura */
+}
+
+#infoPopup.show {
+    opacity: 1;
+    visibility: visible; /* Quando ativo, torna visível */
+}
+
+#infoPopup h4 {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: normal;
+    letter-spacing: 0.5px;
+  }
+
+#infoPopup p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+/* new*/
+#infoPopup .close-button {
+    display: block;
+    position: absolute;
+    top: 0px;  /* Distância do topo */
+    right: 10px;  /* Distância da borda direita */
+    background-color: transparent;
+    color: #007bff; /* Azul padrão */
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    z-index: 10001; /* Garante que o botão fique acima do conteúdo */
+    transition: all 0.3s ease; /* Transição suave */
+    margin: 0px;
+}
+
+#infoPopup .close-button:hover {
+    color: #0056b3; /* Azul mais escuro ao passar o mouse */
+}
+
+
+
+
+
+
+/* Container para os links de download */
+.download-container {
+    display: flex;
+    flex-direction: column; /* Organiza os links em coluna (verticalmente) */
+    align-items: center; /* Centraliza os links horizontalmente */
+    width: 100%; /* Ajusta a largura para caber no contêiner */
+}
+
+/* Estilo para os links de download */
+.download-link {
+    color: #3498db; /* Cor moderna azul */
+    text-decoration: none; /* Remove sublinhado do link */
+    padding: 10px 0; /* Espaçamento vertical entre os links */
+    font-size: 16px; /* Tamanho da fonte */
+    font-family: 'Arial', sans-serif; /* Fonte limpa e moderna */
+    text-align: center; /* Centraliza o texto */
+    width: 100%; /* Garante que o link ocupe a largura total do contêiner */
+}
+
+/* Separador entre os links */
+.download-link:not(:last-child) {
+    border-bottom: 1px solid #e0e0e0; /* Adiciona uma linha separadora */
+}
+
+/* Efeito hover para os links */
+.download-link:hover {
+    color: #2980b9; /* Azul mais escuro ao passar o mouse */
+    text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+}
+/* Estilo para o select */
+.styled-select {
+    background: rgba(0, 0, 0, 0.6); /* Cor de fundo semelhante aos botões */
+    color: white;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 1100;
+    transition: background-color 0.3s ease;
+    height: 40px; /* Altura consistente com os botões */
+    width: auto; /* Ajusta automaticamente o tamanho */
+    min-width: 150px; /* Largura mínima para caber o texto */
+    max-width: 100%; /* Permite expandir até 100% da largura disponível */
+    appearance: none; /* Remove o estilo padrão do select */
+    -webkit-appearance: none; /* Para navegadores WebKit */
+    -moz-appearance: none; /* Para navegadores Mozilla */
+    padding-right: 30px; /* Espaço para o ícone à direita */
+    margin-right: 5px; /* Espaço para o ícone à direita */
+    position: relative;
+}
+
+/* Ícone para o select */
+.styled-select::after {
+    content: '\f078'; /* Unicode para a seta do FontAwesome */
+    font-family: 'FontAwesome';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: white;
+}
+
+/* Estilo de hover */
+.styled-select:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Definindo o select como block para ele expandir conforme o texto */
+.styled-select option {
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.8); /* Cor de fundo do dropdown */
+    color: white; /* Cor do texto dentro das opções */
+}
+
+
+.btn-remover-extra-layer {
+    width: 100%;
+    padding: 5px; /* Reduzido o padding para deixar o botão mais fino */
+    background-color: #808080; /* Cinza neutro */
+    color: white;
+    border: none;
+    border-radius: 5px; /* Cantos levemente arredondados */
+    cursor: pointer;
+    font-size: 14px; /* Texto menor para um design mais delicado */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: background-color 0.3s, box-shadow 0.3s;
+    margin-bottom: 10px;
+}
+
+.btn-remover-extra-layer:hover {
+    background-color: #696969; /* Tom de cinza mais escuro ao passar o mouse */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* Aumenta levemente a sombra no hover */
+}
+
+.btn-remover-extra-layer:active {
+    background-color: #5a5a5a; /* Cinza mais intenso ao clicar */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Reduz a sombra ao clicar */
+}
+
+
+
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+}
+/* Define a largura máxima para os dropdowns e impede o transbordamento */
+.filter-group select {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* Impede a quebra de linha */
+}
+
+.filter-group {
+    max-width: 100%;
+    overflow-x: hidden; /* Remove a rolagem horizontal */
+}
+
+.filter-group select:focus {
+    overflow: auto; /* Permite a rolagem quando o dropdown estiver focado */
+}
+
